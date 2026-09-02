@@ -1,21 +1,36 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
 class Solution{
     public:
-        vector<int> twoSum(vector<int>& nums, int target){
-            for(int i = 0; i < nums.size(); i++){
-                int search = target-nums[i];
-                int j = i+1;
-                while(j < nums.size() && nums[j] != search){
+        void twoSum(vector<int>& nums, int target){
+            vector<int> nums2 = nums;
+            sort(nums2.begin(), nums2.end());
+            int i = 0; int j = 0;
+            for(i = 0; i < nums2.size(); i++){
+                j = i+1;
+                while(j < nums2.size() && nums2[j] != target-nums2[i]){
                     j++;
                 }
-                if (j < nums.size()){
-                    return vector<int> {i, j};
+                if (j < nums2.size()){
+                    break;
                 }
             }
+            
+            vector<int> answer;
+            answer.reserve(2);
+            for(int k = 0; k < nums.size(); k++){
+                if(nums[k] == nums2[i]){
+                    answer.push_back(k);
+                }else if(nums[k] == nums2[j]){
+                    answer.push_back(k);
+                }
+            }
+
+            // return vector<int>{i,j};
         }
 };
 
