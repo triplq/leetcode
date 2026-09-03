@@ -1,48 +1,47 @@
 #include <iostream>
+#include <stack>
 
 using namespace std;
 
 class Solution{
 public: 
     bool isValid(string s){
-        int r, f, sq = 0;
+        stack<char> brac;
         for(int i = 0; i < s.size(); i++){
             switch(s[i]){
-                case '(':
-                    r++;
-                    break;
-                case '{':
-                    f++;
-                    break;
-                case '[':
-                    sq++;
-                    break;
                 case ')':
-                    r--;
+                    if(brac.empty() || brac.top() != '(')
+                        return false;
+                    brac.pop();
                     break;
                 case '}':
-                    f--;
+                    if(brac.empty() || brac.top() != '{')
+                        return false;
+                    brac.pop();
                     break;
                 case ']':
-                    sq--;
+                    if(brac.empty() || brac.top() != '[')
+                        return false;
+                    brac.pop();
                     break;
+                default:
+                    brac.push(s[i]);
             }
         }
 
-        cout << 'r' << r << 'f' << f << 's' << sq << '\n';
-        
-        if (r != 0 || f != 0 || sq != 0){
+        if (!brac.empty()){
             return false;
         }else{
             return true;
         }
+
     }
 };
 
 int main(){
     Solution sol;
 
-    cout << sol.isValid("()") << '\n';
+    cout << sol.isValid("]") << '\n';
 
     return 0;
 }
