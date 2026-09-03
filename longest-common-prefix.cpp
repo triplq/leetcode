@@ -7,51 +7,40 @@ using namespace std;
 class Solution{
 public:
     void longestCommonPrefix(vector<string>& strs){
-        unordered_map<string, int> hash;
-        for(int c = 1; c <= strs[0].length(); c++){
-            int i = 0;
-            for(; i < strs.size(); i++){
-                // cout << "weare in word " << strs[i] << ' ';
-                // cout << strs[i].substr(0,c) << ' ';
-                if(strs[i].substr(0, c).size() == c)
-                    hash[strs[i].substr(0, c)] += 1;
-                if(hash[strs[i].substr(0, c)] == 1 && i != 0){
+        int min_size = strs[0].size(); int min_i = 0;
+        for (int i = 0; i < strs.size(); i++){
+            if (strs[i].size() <= min_size){
+                min_size = strs[i].size();
+                min_i = i;
+            }
+        }
+
+        int k = 0;
+        for(; k < min_size; k++){
+            int j = 0;
+            for(; j < strs.size(); j++){
+                if(j==min_i){
+                    continue;
+                }
+                if(strs[j][k] != strs[min_i][k]){
                     break;
                 }
-                // cout << '\n';
             }
-            // cout << '\n';
-
-            // if(hash[strs[i].substr(0, c)] == 1 && i != 0){
-            //     break;
-            // }
+            if(j != strs.size())
+                break;
         }
 
-        for (auto& [key, val] : hash){
-            cout << key << ' ' << val << '\n';
-        }
-
-        int max = 0;
-        string answer="";
-        for(auto& [key, val] : hash){
-            // cout << key << ' ' << val<< '\n';
-            // cout << "bebe" << max << ' ' << answer << '\n';
-            if(key.size() >= max && val >= strs.size()){
-                max = key.size();
-                answer = key;
-            }
-        }
-
-        cout << answer << '\n';
-
-        // return answer;
+        if(k == 0)
+            cout << "";
+        else
+            cout << strs[min_i].substr(0,k) << '\n';
     }
 };
 
 int main(){
     Solution sol;
 
-    vector<string> strs {"ab", "a"};
+    vector<string> strs {"flower", "flow", "flight"};
     sol.longestCommonPrefix(strs);
     // cout << '"' << sol.longestCommonPrefix(strs) << '"' << '\n';
 }
