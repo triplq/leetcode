@@ -11,7 +11,13 @@ x0 should be number that is bigger then resault of sqrt(x)
 class Solution{
 public:
     int mySqrtx(int x){
-        
+        if(x<=0) return 0;
+        if (x==1) return 1;
+        int x0 = x;
+        while(x0*x0 > x){
+            x0 = ((x0*x0)+x)/(2*x0);
+        }
+        return x0;
     }
 };
 
