@@ -24,7 +24,7 @@ public:
 int main(){
     Solution sol;
 
-    cout << sol.mySqrtx(4) << '\n';
+    cout << sol.mySqrtx(5) << '\n';
 
     return 0;
 }
