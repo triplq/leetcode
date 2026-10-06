@@ -2,38 +2,21 @@ class Solution {
 public:
     vector<int> preorder(Node* root) {
         vector<int> result;
-        Node* i = root;  
-        stack<Node*> keys;
-        unordered_map<Node*, int> hash;
+        stack<Node*> s;
+        if (!root)
+            return result;
 
-        while (!keys.empty() || i != nullptr) {
-            while (i->children.size() != 0) {
-                std::cout << i->val << ' ';
-                auto [it, success] = hash.insert({i, 0});
+        s.push(root);
 
-                if (success) {
-                    result.push_back(i->val);
-                    keys.push(i);
-                }
-                
-                i = i->children[hash[i]];
+        while (!s.empty()) {
+            Node* current = s.top();
+
+            result.push_back(current->val);
+            s.pop();
+
+            for (int i = current->children.size() - 1; i >= 0; i--) {
+                s.push(current->children[i]);
             }
-            result.push_back(i->val);
-
-            while (!keys.empty()) {
-                i = keys.top();
-                hash[i]++;
-
-                if (i->children.size() == hash[i]) {
-                    keys.pop();
-                    hash.erase(i);
-                }
-                else {
-                    break;
-                }
-            }
-            if (keys.empty())
-                i = nullptr;
         }
 
         return result;
